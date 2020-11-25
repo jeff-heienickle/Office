@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Office.Web", "Office.Web\Office.Web.csproj", "{879BB7F3-CD4D-4337-AA82-285E9EED8543}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{879BB7F3-CD4D-4337-AA82-285E9EED8543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879BB7F3-CD4D-4337-AA82-285E9EED8543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879BB7F3-CD4D-4337-AA82-285E9EED8543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879BB7F3-CD4D-4337-AA82-285E9EED8543}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C763174C-EAF5-4D07-8C49-5CEB7D298A1D}
+	EndGlobalSection
+EndGlobal
