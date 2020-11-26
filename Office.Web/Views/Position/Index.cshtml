@@ -1,0 +1,65 @@
+﻿@model PositionsViewModel
+
+@{
+    ViewData["Title"] = "Manage Position in the Office";
+}
+
+    <h3>
+        <a class="btn-outline-primary" asp-action="Add">Add New Position</a> to the Office Organization.
+    </h3>
+
+    <div class="card">
+        <h5 class="card-header">Search the Office Org. Chart</h5>
+        <div class="card-body">
+            <form asp-action="Index" method="get">
+                <label asp-for="@Model.name"></label>
+                <input type="text" asp-for="@Model.name" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+             </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">@ViewData["Title"]</div>
+        <div class="card-footer">
+            <pager pager-model="@Model.positions"></pager> <span>3 Records/Page</span>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Name</td>
+                    <td>Bonus</td>
+                    <td>Created</td>
+                    <td>Image</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model.positions.Results)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Name</td>
+                    <td>@item.Bonus</td>
+                    <td>@item.Created</td>
+                    @if (item.Image != null)
+                    {
+                        <td><img style="max-width:100px; min-height:100px" src="@string.Format("data:image/*;base64,{0}", Convert.ToBase64String(item.Image))" /></td>
+                    }
+                    else
+                    {
+                        <td>no image</td>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="card-footer">
+            <pager pager-model="@Model.positions"></pager>
+        </div>
+
+    </div>

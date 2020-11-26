@@ -12,6 +12,8 @@ using Office.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Office.Core.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Office.Web
 {
@@ -34,6 +36,10 @@ namespace Office.Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
+            services.AddTransient<ISpotService, SpotService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

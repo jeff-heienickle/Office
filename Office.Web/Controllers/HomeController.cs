@@ -20,7 +20,15 @@ namespace Office.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Position");
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public IActionResult Privacy()

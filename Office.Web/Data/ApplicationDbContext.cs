@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Office.Core.Entities;
 
 namespace Office.Web.Data
 {
@@ -12,5 +13,7 @@ namespace Office.Web.Data
             : base(options)
         {
         }
+
+        public DbSet<Spot> Spots { get; set; }
     }
 }
