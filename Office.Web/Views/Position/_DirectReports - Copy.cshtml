@@ -1,0 +1,47 @@
+﻿@model ICollection<Office.Core.Entities.Spot>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="panel panel-default">
+    <div class="panel-heading">Direct reports</div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <td>&#x2714;</td>
+                <td>Title</td>
+                <td>Name</td>
+                <td>Bonus</td>
+                <td>Created</td>
+                <td>Image</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" class="done-checkbox">
+                </td>
+                <td>@item.Title</td>
+                <td>@item.Name</td>
+                <td>@item.Bonus</td>
+                <td>@item.Created</td>
+                @if (item.Image != null)
+                {
+                    <td><img style="max-width:100px; min-height:100px" src="@string.Format("data:image/*;base64,{0}", Convert.ToBase64String(item.Image))" /></td>
+                }
+                else
+                {
+                    <td>no image</td>
+                }
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
