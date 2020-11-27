@@ -1,4 +1,4 @@
-﻿@model PositionViewModel
+﻿@model EditPositionViewModel
 @{
     ViewData["Title"] = "Edit";
 }
@@ -17,37 +17,41 @@
             <span>no image</span>
         }
 
-        <form enctype="multipart/form-data" asp-action="Add" method="POST">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <form enctype="multipart/form-data" asp-action="Edit" method="POST">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Bonus" class="control-label"></label>
+            <input asp-for="Bonus" class="form-control">
+            <span asp-validation-for="Bonus" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ManagerId" class="control-label"></label>
+            <select asp-for="ManagerId" asp-items="Model.Managers" class="form-control">
+                <option value="">Select a Manager...</option>
+            </select>
+            <span asp-validation-for="ManagerId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FormFile" class="control-label"></label>
+            <input asp-for="FormFile" class="form-control" accept="image/*">
+            <span asp-validation-for="FormFile" class="text-danger"></span><br />
+            <img id="menu_image" class="preview_img" />
 
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control">
-                <span asp-validation-for="Name" class="text-danger"></span>
-
-                <label asp-for="Bonus" class="control-label"></label>
-                <input asp-for="Bonus" class="form-control">
-                <span asp-validation-for="Bonus" class="text-danger"></span>
-
-                <label asp-for="ManagerId" class="control-label"></label>
-                <select asp-for="ManagerId" asp-items="Model.Managers" class="form-control">
-                    <option value="">Select a Manager...</option>
-                </select>
-
-                <span asp-validation-for="ManagerId" class="text-danger"></span>
-
-                <label asp-for="FormFile" class="control-label"></label>
-                <input asp-for="FormFile" class="form-control">
-                <span asp-validation-for="FormFile" class="text-danger"></span>
-
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Edit" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save Changes" class="btn btn-primary" />
+        </div>
+    </form>
     </div>
     <div class="col-md-6">
         @if (Model.DirectReports != null)

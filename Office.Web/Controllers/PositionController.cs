@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Office.Core.Entities;
@@ -100,7 +99,7 @@ namespace Office.Web.Controllers
             {
                 return BadRequest("Could not add a new Position.");
             }
-
+            TempData["info"] = $"Adding position {positionVM.Title} for {positionVM.Name}.";
             return RedirectToAction("Index");
         }
 
@@ -118,7 +117,7 @@ namespace Office.Web.Controllers
                 return NotFound();
             }
 
-            PositionViewModel model = new PositionViewModel()
+            EditPositionViewModel model = new EditPositionViewModel()
             {
                 Bonus = spot.Bonus,
                 Created = spot.Created,
@@ -131,6 +130,50 @@ namespace Office.Web.Controllers
                 Image = spot.Image
             };
             return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditPositionViewModel positionVM)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(positionVM);
+            }
+
+            Spot spot = new Spot
+            {
+                Id = (Guid)positionVM.Id,
+                Name = positionVM.Name,
+                Title = positionVM.Title,
+                Bonus = positionVM.Bonus,
+                ManagerId = positionVM.ManagerId
+            };
+            if (positionVM.FormFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await positionVM.FormFile.CopyToAsync(memoryStream);
+
+                    // Upload the file if less than 2 MB
+                    if (memoryStream.Length < 2097152)
+                    {
+                        spot.Image = memoryStream.ToArray();
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
+                }
+            }
+
+            var successful = await _spotService.EditSpotAsync(spot);
+            if (!successful)
+            {
+                return BadRequest("Could not edit Position.");
+            }
+
+            TempData["info"] = $"Edting position {positionVM.Title} for {positionVM.Name}.";
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

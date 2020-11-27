@@ -20,7 +20,7 @@ namespace Office.Core.Services
 
         public async Task<PagedResult<Spot>> GetSpotsAsync(int page, int pageSize)
         {
-            var spots = await _context.Spots
+            var spots = await _context.Spots.AsNoTracking()
                 .Where(x => x.IsActive == true)
                 .GetPagedAsync(page, pageSize);
             return spots;
@@ -28,7 +28,7 @@ namespace Office.Core.Services
 
         public async Task<PagedResult<Spot>> GetSpotsByNameAsync(string name, int page, int pageSize)
         {
-            IQueryable<Spot> spotQuery = _context.Spots;
+            IQueryable<Spot> spotQuery = _context.Spots.AsNoTracking();
             spotQuery = spotQuery.Where(x => x.IsActive == true);
             if (!string.IsNullOrEmpty(name))
             {
@@ -49,6 +49,23 @@ namespace Office.Core.Services
             _context.Spots.Add(spot);
 
            // spot.DirectReports
+
+            var saveResult = await _context.SaveChangesAsync();
+            return saveResult == 1;
+        }
+
+        public async Task<bool> EditSpotAsync(Spot spot)
+        {
+            var editspot = await _context.Spots.FindAsync(spot.Id);
+            editspot.Name = spot.Name;
+            editspot.Title = spot.Title;
+            editspot.Bonus = spot.Bonus;
+            editspot.ManagerId = spot.ManagerId;
+
+            if (spot.Image != null)
+            {
+                editspot.Image = spot.Image;
+            }
 
             var saveResult = await _context.SaveChangesAsync();
             return saveResult == 1;
@@ -79,7 +96,7 @@ namespace Office.Core.Services
 
         public async Task<Spot[]> GetManagersAsync()
         {
-            var spots = await _context.Spots
+            var spots = await _context.Spots.AsNoTracking()
                 .Where(x => x.IsActive == true)
                 .OrderBy(x => x.Name)
                 .ToArrayAsync();

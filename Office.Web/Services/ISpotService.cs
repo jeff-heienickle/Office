@@ -15,6 +15,8 @@ namespace Office.Core.Services
 
         Task<bool> AddSpotAsync(Spot spot);
 
+        Task<bool> EditSpotAsync(Spot spot);
+
         Task<Spot[]> GetManagersAsync();
 
         Task<bool> DeleteSpotAsnc(Guid id);

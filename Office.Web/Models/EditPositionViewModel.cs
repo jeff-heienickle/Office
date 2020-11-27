@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Office.Web.Models
 {
-    public class PositionViewModel
+    public class EditPositionViewModel
     {
         public Guid? Id { get; set; }
 
@@ -28,7 +28,6 @@ namespace Office.Web.Models
         public virtual ICollection<Spot> DirectReports { get; set; }
         public byte[] Image { get; set; }
 
-        [Required]
         [Display(Name = "File")]
         public IFormFile FormFile { get; set; }
 
